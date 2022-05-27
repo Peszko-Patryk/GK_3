@@ -5,14 +5,14 @@ public class Observer extends Point {
 
     private final ArrayList<Face> faces;
     private final ArrayList<Point> points;
-    private Vector lightVector;
+    private final Vector lightVector;
     private int angle = 90;
 
     public Observer(float x, float y, float z, ArrayList<Face> faces, ArrayList<Point> points) {
         super(x, y, z);
         this.faces = faces;
         this.points = points;
-        lightVector = Vector.normalize(new Vector(new Point(0, 0, 0), new Point(1, 1, 1)));
+        lightVector = Vector.normalize(new Vector(new Point(0, 0, 0), new Point(-1, -2, 1)));
     }
 
     public void paint(Graphics g) {
@@ -62,8 +62,8 @@ public class Observer extends Point {
         for (Point point : points) {
             point.rotateZ(Camera.ROTATE_DEGREE.value);
         }
-//        lightVector.rotateLeftZ();
-//        lightVector.update();
+        lightVector.B.rotateZ(Camera.ROTATE_DEGREE.value);
+        lightVector.update();
     }
 
     public void turnRightZ() {
