@@ -12,7 +12,7 @@ public class Observer extends Point {
         super(x, y, z);
         this.faces = faces;
         this.points = points;
-        lightVector = Vector.normalize(new Vector(new Point(0, 0, 0), new Point(-1, -2, 1)));
+        lightVector = Vector.normalize(new Vector(new Point(0, 0, 0), new Point(-1, -2, 2)));
     }
 
     public void paint(Graphics g) {

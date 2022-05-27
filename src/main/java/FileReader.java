@@ -26,7 +26,7 @@ public class FileReader {
     }
 
     private void extractDataFromLine(String nextLine) {
-        String[] parts = nextLine.split(" ");
+        String[] parts = nextLine.replace("//","").split(" ");
         switch (parts[0]){
             case "v":
                 points.add(new Point(Double.parseDouble(parts[1]),Double.parseDouble(parts[2]),Double.parseDouble(parts[3])));
