@@ -4,11 +4,9 @@ import java.awt.*;
 public class Graphic extends JPanel {
 
     private transient Observer observer;
-    private static final int DELAY = 1000;
 
     @Override
     public void paint(Graphics g) {
-        long time = System.currentTimeMillis();
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, 1000, 700);
         observer.paint(g);
@@ -27,11 +25,7 @@ public class Graphic extends JPanel {
         g.drawString("Obrócić w lewo: L", 1010, 170);
         g.drawString("Przekręcić w prawo: M", 1010, 190);
         g.drawString("Przekręcić w lewo: N", 1010, 210);
-
-//        while (System.currentTimeMillis() - time < DELAY) {
-//            continue;
-//        }
-//        repaint();
+        repaint();
     }
 
     public void setObserver(Observer observer) {

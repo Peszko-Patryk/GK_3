@@ -19,27 +19,23 @@ public class Face {
     public void paint(Graphics g, int angle, Vector lightVector) {
         Polygon polygon = createPolygon(angle);
         updateColor(lightVector);
-        g.setColor(Color.BLACK);
-//        g.setColor(lighteningColor);
+        g.setColor(lighteningColor);
         g.fillPolygon(polygon);
-
-        double tan = tan(Math.toRadians(angle / 2.0));
-        g.setColor(Color.WHITE);
-        g.drawLine((int) ((500 * p1.getX()) / (p1.getZ() * tan)) + 500, (int) -((500 * p1.getY()) / (p1.getZ() * tan)) + 350,(int) ((500 * p2.getX()) / (p2.getZ() * tan)) + 500, (int) -((500 * p2.getY()) / (p2.getZ() * tan)) + 350);
-        g.drawLine((int) ((500 * p1.getX()) / (p1.getZ() * tan)) + 500, (int) -((500 * p1.getY()) / (p1.getZ() * tan)) + 350,(int) ((500 * p3.getX()) / (p3.getZ() * tan)) + 500, (int) -((500 * p3.getY()) / (p3.getZ() * tan)) + 350);
-        g.drawLine((int) ((500 * p3.getX()) / (p3.getZ() * tan)) + 500, (int) -((500 * p3.getY()) / (p3.getZ() * tan)) + 350,(int) ((500 * p2.getX()) / (p2.getZ() * tan)) + 500, (int) -((500 * p2.getY()) / (p2.getZ() * tan)) + 350);
     }
 
     private void updateColor(Vector light) {
-//        Vector v1 = new Vector(lines.get(0).getB(), lines.get(0).getA());
-//        Vector v2 = new Vector(lines.get(0).getB(), lines.get(1).getA());
-//        Vector normal = Vector.normalize(Vector.cross(v1, v2));
-//        double dot = Vector.dot(normal, light);
-//        double cos = Math.pow(Vector.cos(new Vector(lines.get(0).getA(),new Point(0, 0, 0)), Vector.getMirrorVector(light, normal)), Light.N.value);
-//        double lightRatio = Light.IP.value * (Light.KD.value * dot + Light.KS.value * cos) + Light.AMBIENT.value;
-//        lightRatio = Math.max(Light.MIN.value, Math.min(Light.MAX.value, lightRatio));
-//        lighteningColor = new Color((int) (BASE_COLOR.getRed() * lightRatio), (int) (BASE_COLOR.getGreen() * lightRatio)
-//                , (int) (BASE_COLOR.getBlue() * lightRatio));
+        Vector v1 = new Vector(p2, p1);
+        Vector v2 = new Vector(p2, p3);
+        Vector normal = Vector.normalize(Vector.cross(v1, v2));
+        double dot = Vector.dot(normal, light);
+        double cos = 0;
+        if (dot > 0.15) {
+            cos = Math.pow(Vector.cos(new Vector(p1, new Point(0, 0, 0)), Vector.getReboundVector(normal, light.B)), Light.N.value);
+        }
+        double lightRatio = Light.IP.value * (Light.KD.value * dot + Light.KS.value * cos) + Light.AMBIENT.value;
+        lightRatio = Math.max(Light.MIN.value, Math.min(Light.MAX.value, lightRatio));
+        lighteningColor = new Color((int) (BASE_COLOR.getRed() * lightRatio), (int) (BASE_COLOR.getGreen() * lightRatio)
+                , (int) (BASE_COLOR.getBlue() * lightRatio));
     }
 
     private Polygon createPolygon(int angle) {

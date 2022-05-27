@@ -11,9 +11,8 @@ public class Observer extends Point {
     public Observer(float x, float y, float z, ArrayList<Face> faces, ArrayList<Point> points) {
         super(x, y, z);
         this.faces = faces;
-        System.out.println(faces.size());
         this.points = points;
-        lightVector = Vector.normalize(new Vector(new Point(0, 0, 0), new Point(1, 2, 3)));
+        lightVector = Vector.normalize(new Vector(new Point(0, 0, 0), new Point(1, 1, 1)));
     }
 
     public void paint(Graphics g) {
@@ -71,40 +70,40 @@ public class Observer extends Point {
         for (Point point : points) {
             point.rotateZ(-Camera.ROTATE_DEGREE.value);
         }
-//        lightVector.rotateRightZ();
-//        lightVector.update();
+        lightVector.B.rotateZ(-Camera.ROTATE_DEGREE.value);
+        lightVector.update();
     }
 
     public void turnLeftY() {
         for (Point point : points) {
             point.rotateY(Camera.ROTATE_DEGREE.value);
         }
-//        lightVector.rotateLeftY();
-//        lightVector.update();
+        lightVector.B.rotateY(Camera.ROTATE_DEGREE.value);
+        lightVector.update();
     }
 
     public void turnRightY() {
         for (Point point : points) {
             point.rotateY(-Camera.ROTATE_DEGREE.value);
         }
-//        lightVector.rotateRightY();
-//        lightVector.update();
+        lightVector.B.rotateY(-Camera.ROTATE_DEGREE.value);
+        lightVector.update();
     }
 
     public void turnUpX() {
         for (Point point : points) {
             point.rotateX(-Camera.ROTATE_DEGREE.value);
         }
-//        lightVector.rotateUpX();
-//        lightVector.update();
+        lightVector.B.rotateX(-Camera.ROTATE_DEGREE.value);
+        lightVector.update();
     }
 
     public void turnDownX() {
         for (Point point : points) {
             point.rotateX(Camera.ROTATE_DEGREE.value);
         }
-//        lightVector.rotateDownX();
-//        lightVector.update();
+        lightVector.B.rotateX(Camera.ROTATE_DEGREE.value);
+        lightVector.update();
     }
 
     public void zoomOut() {

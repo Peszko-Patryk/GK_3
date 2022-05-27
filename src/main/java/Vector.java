@@ -1,13 +1,25 @@
 public class Vector {
 
+    public final Point A;
+    public final Point B;
     public double x;
     public double y;
     public double z;
 
     public Vector(Point point, Point point1) {
+        A = point;
+        B = point1;
         x = point1.getX() - point.getX();
         y = point1.getY() - point.getY();
         z = point1.getZ() - point.getZ();
+    }
+
+    public Vector(double x, double y, double z) {
+        A = new Point(0, 0, 0);
+        B = new Point(x, y, z);
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
     // iloczyn skalarny
@@ -17,13 +29,12 @@ public class Vector {
 
     // iloczyn wektorowy
     public static Vector cross(Vector v1, Vector v2) {
-        return new Vector(new Point(0, 0, 0), new Point((float) (v1.y * v2.z - v1.z * v2.y),
-                (float) (v1.z * v2.x - v1.x * v2.z), (float) (v1.x * v2.y - v1.y * v2.x)));
+        return new Vector((v1.y * v2.z - v1.z * v2.y), (v1.z * v2.x - v1.x * v2.z), (v1.x * v2.y - v1.y * v2.x));
     }
 
     public static Vector normalize(Vector v) {
         double magnitude = Math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
-        return new Vector(new Point(0, 0, 0), new Point((float) (v.x / magnitude), (float) (v.y / magnitude), (float) (v.z / magnitude)));
+        return new Vector((v.x / magnitude), (v.y / magnitude), (v.z / magnitude));
     }
 
     // cos miedzy wektorami
@@ -33,10 +44,17 @@ public class Vector {
         return dot(v1, v2) / (v1Len * v2Len);
     }
 
-    public static Vector getMirrorVector(Vector vector, Vector mirror) {
-        double xVec = 2 * mirror.x + vector.x;
-        double yVec = 2 * mirror.y + vector.y;
-        double zVec = 2 * mirror.z + vector.z;
-        return new Vector(new Point(0, 0, 0), new Point(xVec, yVec, zVec));
+    public void update() {
+        x = B.getX() - A.getX();
+        y = B.getY() - A.getY();
+        z = B.getZ() - A.getZ();
+    }
+
+    public static Vector getReboundVector(Vector n, Point light) {
+        double t = -(n.x * light.getX() + n.y * light.getY() + n.z * light.getZ()) / (n.x * n.x + n.y * n.y + n.z * n.z);
+        double newX = -(2 * (light.getX() + t * n.x) - light.getX());
+        double newY = -(2 * (light.getY() + t * n.y) - light.getY());
+        double newZ = -(2 * (light.getZ() + t * n.z) - light.getZ());
+        return new Vector(newX, newY, newZ);
     }
 }
